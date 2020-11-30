@@ -9,7 +9,8 @@ import (
 
 // Config represents the configuration information.
 type Config struct {
-	Port string `json:"port"`
+	Port   string `json:"port"`
+	DBPath string `json:"db_path"`
 }
 
 // Conf contains the initialized configuration struct

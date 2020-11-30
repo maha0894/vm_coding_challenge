@@ -18,16 +18,35 @@ type Stats struct {
 	InvalidCount int `json:"invalid_count"`
 }
 
-// Validate is the function which check incoming request
+// Validate is the function which checks Request fields
 func (r *Request) Validate() (err error) {
-	// TODO check remote IP address which is in the blacklist
-	// TODO check user agent
 	switch {
 	case r.CustomerID == 0:
 		return errors.New("customer ID not specified")
+	case r.TagID == 0:
+		return errors.New("tag ID not specified")
+	case r.UserID == "":
+		return errors.New("user ID not specified")
+	case r.RemoteIP == "":
+		return errors.New("remote IP not specified")
+	case r.Timestamp == 0:
+		return errors.New("timestamp not specified")
 	}
-	// TODO check customer ID not found in the database or disabled
 	return err
+}
+
+// CheckValidity is the function which checks validity of Request
+func CheckValidity(req Request) (err error) {
+	err = req.Validate()
+	if err == nil {
+		// TODO check remote IP address which is in the blacklist
+		// TODO check user agent
+		// TODO check customer ID not found in the database or disabled
+	}
+	if req.CustomerID != 0 {
+		// count stats
+	}
+	return
 }
 
 // GetStats is the function which returns stats based on params

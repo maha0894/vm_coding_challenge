@@ -10,6 +10,7 @@ import (
 	"time"
 	"vm_coding_challenge/config"
 	"vm_coding_challenge/controllers"
+	"vm_coding_challenge/db"
 
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
@@ -27,7 +28,12 @@ func main() {
 		return
 	}
 
-	// TODO setup db
+	// setup db
+	err = db.Setup()
+	if err != nil {
+		fmt.Println("DB error: ", err)
+		return
+	}
 
 	router := mux.NewRouter()
 	router.HandleFunc("/request", controllers.Request).Methods("POST")

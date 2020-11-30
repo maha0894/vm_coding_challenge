@@ -18,13 +18,12 @@ func Request(w http.ResponseWriter, r *http.Request) {
 		JSONResponse(w, "Invalid JSON structure", http.StatusBadRequest)
 		return
 	}
-	err = req.Validate()
+	err = models.CheckValidity(req)
 	if err != nil {
-		// count stats
-		JSONResponse(w, "Request rejected", http.StatusInternalServerError)
+		JSONResponse(w, "Request rejected "+err.Error(), http.StatusInternalServerError)
 		return
 	}
-	JSONResponse(w, "", http.StatusOK)
+	JSONResponse(w, "Request accepted", http.StatusOK)
 }
 
 // Statistics handles /stats route
