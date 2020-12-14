@@ -9,8 +9,8 @@ import (
 
 // Config represents the configuration information.
 type Config struct {
-	Port   string `json:"port"`
-	DBPath string `json:"db_path"`
+	ServiceURL string `json:"service_url"`
+	DBPath     string `json:"db_path"`
 }
 
 // Conf contains the initialized configuration struct
@@ -25,9 +25,9 @@ func LoadConfig(filepath string) (err error) {
 		return errors.New("config file error")
 	}
 	json.Unmarshal(configFile, &Conf)
-	if Conf.Port == "" {
-		fmt.Println("No port has been configured.")
-		return errors.New("no port has been configured")
+	if Conf.ServiceURL == "" {
+		fmt.Println("No ServiceURL has been configured.")
+		return errors.New("no ServiceURL has been configured")
 	}
 	return
 }

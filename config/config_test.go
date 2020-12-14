@@ -21,7 +21,7 @@ func TestLoadConfigFails1(t *testing.T) {
 
 func TestLoadConfigFails2(t *testing.T) {
 	t.Run("loads config fails 2", func(t *testing.T) {
-		tempConfig := Config{Port: ""}
+		tempConfig := Config{ServiceURL: ""}
 		d1, _ := json.Marshal(tempConfig)
 		err := os.Mkdir("temp", 0755)
 		if err != nil {
@@ -35,8 +35,8 @@ func TestLoadConfigFails2(t *testing.T) {
 		if !reflect.DeepEqual(tempConfig, Conf) {
 			t.Errorf("got %q, want %q", Conf, tempConfig)
 		}
-		if err.Error() != "no port has been configured" {
-			t.Errorf("got %q, want %q", err.Error(), "no port has been configured")
+		if err.Error() != "no ServiceURL has been configured" {
+			t.Errorf("got %q, want %q", err.Error(), "no ServiceURL has been configured")
 		}
 		os.RemoveAll("temp")
 	})
@@ -44,7 +44,7 @@ func TestLoadConfigFails2(t *testing.T) {
 
 func TestLoadConfig(t *testing.T) {
 	t.Run("loads config", func(t *testing.T) {
-		tempConfig := Config{Port: "3333"}
+		tempConfig := Config{ServiceURL: "3333"}
 		d1, _ := json.Marshal(tempConfig)
 		err := os.Mkdir("temp", 0755)
 		if err != nil {

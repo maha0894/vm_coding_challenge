@@ -1,4 +1,4 @@
 {
-	"port": "3333",
-	"db_path": "user:pass@tcp(127.0.0.1:3306)/dbname?charset=utf8mb4&parseTime=True&loc=Local"
+	"service_url": "localhost:3333",
+	"db_path": "root:rootpwd@tcp(127.0.0.1:3306)/vm_challenge?charset=utf8mb4&parseTime=True&loc=Local"
 }

@@ -42,12 +42,12 @@ func main() {
 
 	srv := &http.Server{
 		Handler: handlers.CombinedLoggingHandler(os.Stdout, router),
-		Addr:    "0.0.0.0:" + config.Conf.Port,
+		Addr:    config.Conf.ServiceURL,
 		// Good practice: enforce timeouts for servers you create!
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
-	fmt.Println("Starting server at http://localhost:", config.Conf.Port)
+	fmt.Println("Starting server at ", config.Conf.ServiceURL)
 	log.Fatal(srv.ListenAndServe())
 
 	// Handle graceful shutdown

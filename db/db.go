@@ -2,7 +2,6 @@ package db
 
 import (
 	"fmt"
-	"log"
 	"time"
 	"vm_coding_challenge/config"
 
@@ -18,7 +17,7 @@ func Setup() (err error) {
 	migrateConf := &goose.DBConf{
 		MigrationsDir: "DB/migrations",
 		Env:           "production",
-		Driver: &goose.DBDriver{
+		Driver: goose.DBDriver{
 			Name:    "mysql",
 			OpenStr: config.Conf.DBPath,
 			Import:  "github.com/go-sql-driver/mysql",
@@ -48,7 +47,6 @@ func Setup() (err error) {
 		time.Sleep(5 * time.Second)
 	}
 	DB.LogMode(false)
-	DB.SetLogger(log.Logger)
 	DB.DB().SetMaxOpenConns(1)
 	if err != nil {
 		fmt.Println("DB error: ", err)

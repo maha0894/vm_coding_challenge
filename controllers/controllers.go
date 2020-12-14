@@ -5,9 +5,12 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"time"
 	"vm_coding_challenge/models"
 
 	"github.com/gorilla/mux"
+
+	useragent "github.com/mileusna/useragent"
 )
 
 // Request handles /request route
@@ -18,7 +21,8 @@ func Request(w http.ResponseWriter, r *http.Request) {
 		JSONResponse(w, "Invalid JSON structure", http.StatusBadRequest)
 		return
 	}
-	err = models.CheckValidity(req)
+	ua := useragent.Parse(r.Header.Get("User-Agent"))
+	err = models.CheckValidity(req, ua.Name)
 	if err != nil {
 		JSONResponse(w, "Request rejected "+err.Error(), http.StatusInternalServerError)
 		return
@@ -29,10 +33,11 @@ func Request(w http.ResponseWriter, r *http.Request) {
 // Statistics handles /stats route
 func Statistics(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	timestamp, _ := strconv.Atoi(vars["day"])
+	date, _ := time.Parse("2006-01-02", vars["day"])
 	customerID, _ := strconv.Atoi(vars["id"])
-	stats, err := models.GetStats(vars["by"], timestamp, customerID)
+	stats, err := models.GetStats(vars["by"], date, customerID)
 	if err != nil {
+		fmt.Println("Error getting statistics: ", err)
 		JSONResponse(w, "Something went wrong", http.StatusInternalServerError)
 		return
 	}
