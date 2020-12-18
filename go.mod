@@ -10,5 +10,6 @@ require (
 	github.com/jinzhu/gorm v1.9.16
 	github.com/kylelemons/go-gypsy v1.0.0 // indirect
 	github.com/mileusna/useragent v1.0.2
+	github.com/signalsciences/ipv4 v1.4.0
 	github.com/ziutek/mymysql v1.5.4 // indirect
 )
