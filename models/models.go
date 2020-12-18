@@ -2,12 +2,11 @@ package models
 
 import (
 	"errors"
-	"strconv"
-	"strings"
 	"time"
 	"vm_coding_challenge/db"
 
 	"github.com/jinzhu/gorm"
+	"github.com/signalsciences/ipv4"
 )
 
 type Request struct {
@@ -33,7 +32,7 @@ type Customer struct {
 }
 
 type IPBlacklist struct {
-	IP int `json:"ip"`
+	IP uint32 `json:"ip"`
 }
 
 type UABlacklist struct {
@@ -66,7 +65,7 @@ func CheckValidity(req Request, userAgent string) (err error) {
 		ua := UABlacklist{UA: userAgent}
 		if ua.valid() {
 			// check remote IP address which is in the blacklist
-			remIP, _ := strconv.Atoi(strings.ReplaceAll(req.RemoteIP, ".", ""))
+			remIP, _ := ipv4.FromDots(req.RemoteIP)
 			ip := IPBlacklist{IP: remIP}
 			if ip.valid() {
 				// check customer ID not found in the database or disabled
